@@ -17,5 +17,16 @@ services:
       - --kafka-addr PLAINTEXT://0.0.0.0:9092
       - --advertise-kafka-addr PLAINTEXT://redpanda:9092
 
+  redpanda-console:
+    image: redpandadata/console:latest
+    container_name: redpanda-console
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      KAFKA_BROKERS: redpanda:9092
+    depends_on:
+      - redpanda
+
 volumes:
   redpanda_data:
