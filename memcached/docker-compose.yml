@@ -1,0 +1,21 @@
+services:
+  memcached:
+    image: memcached:latest
+    container_name: memcached
+    restart: always
+    ports:
+      - "11211:11211"
+
+  phpcacheadmin:
+    image: robinn/phpcacheadmin:latest
+    container_name: phpcacheadmin
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      PCA_MEMCACHED_0_HOST: memcached
+      PCA_MEMCACHED_0_PORT: 11211
+    depends_on:
+      - memcached
+    links:
+      - memcached

@@ -9,15 +9,18 @@ services:
       - redis_data:/data
     command: [ "redis-server", "--appendonly", "yes" ]
 
-  redis-commander:
-    image: rediscommander/redis-commander:latest
-    container_name: redis-commander
+  phpcacheadmin:
+    image: robinn/phpcacheadmin:latest
+    container_name: phpcacheadmin
     restart: always
     ports:
-      - "8081:8081"
+      - "8080:80"
     environment:
-      REDIS_HOSTS: local:redis:6379
+      PCA_REDIS_0_HOST: redis
+      PCA_REDIS_0_PORT: 6379
     depends_on:
+      - redis
+    links:
       - redis
 
 volumes:
